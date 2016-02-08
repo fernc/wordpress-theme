@@ -41,6 +41,7 @@ function craigfern_setup() {
 	 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 	 */
 	add_theme_support( 'post-thumbnails' );
+	set_post_thumbnail_size( 828, 360, true);
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
@@ -76,6 +77,12 @@ function craigfern_setup() {
 		'default-color' => 'ffffff',
 		'default-image' => '',
 	) ) );
+
+	/**
+	* Add editor styles 
+	*/
+
+	add_editor_style( array( 'inc/editor-style.css', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', 'https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700,300', 'https://fonts.googleapis.com/css?family=Fira+Sans:400,300,700' ) );
 }
 endif;
 add_action( 'after_setup_theme', 'craigfern_setup' );
@@ -102,8 +109,8 @@ function craigfern_widgets_init() {
 		'name'          => esc_html__( 'Sidebar', 'craigfern' ),
 		'id'            => 'sidebar-1',
 		'description'   => '',
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
 	) );
@@ -116,10 +123,13 @@ add_action( 'widgets_init', 'craigfern_widgets_init' );
 function craigfern_scripts() {
 	wp_enqueue_style( 'craigfern-style', get_stylesheet_uri() );
 	
-	wp_enqueue_style('craigfern-google-fonts', 'https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700,300');
+	wp_enqueue_style('craigfern-google-fonts-merriweather', 'https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700,300');
+	
+	wp_enqueue_style('craigfern-google-fonts-fira', 'https://fonts.googleapis.com/css?family=Fira+Sans:400,300,700');
+
 	wp_enqueue_style('craigfern-fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
 
-	wp_enqueue_script( 'craigfern-navigation', get_template_directory_uri() . '/js/navigation.js', array('jquery'), '20120206', true );
+	wp_enqueue_script( 'craigfern-navigation', get_template_directory_uri() . '/js/functions.js', array('jquery'), '20120206', true );
 	wp_localize_script( 'craigfern-navigation', 'screenReaderText', array(
 		'expand'   => '<span class="screen-reader-text">' . __( 'expand child menu', 'craigfern' ) . '</span>',
 		'collapse' => '<span class="screen-reader-text">' . __( 'collapse child menu', 'craigfern' ) . '</span>',
